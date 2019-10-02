@@ -36,24 +36,29 @@ class ChatScreen extends Component {
       loading: true,
       error: false,
       posts: '',
-      value:''
+      value: ''
     }
   }
-componentWillReceiveProps (nextProps) {
-  let { items } = this.state
-  let posts=nextProps.messages.payload
-  console.log(posts)
-  let item = {
-    type: 2,
-    //key: 'aKey',// give it a unique key
-    id: items[items.length - 1].id++, // get the last id of our items and increment it(i.e +1)
-    receiveMes: posts//remove line space
+
+  componentWillReceiveProps (nextProps) {
+    let { items } = this.state
+    let posts = nextProps.messages.payload
+    if(posts!=null){
+      console.log(posts)
+      let item = {
+        type: 2,
+        //key: 'aKey',// give it a unique key
+        id: items[items.length - 1].id++, // get the last id of our items and increment it(i.e +1)
+        receiveMes: posts//remove line space
+      }
+      items.push(item) // add our new item
+      let _lengthItems = this.state.items.length
+      console.log(this.state.items)
+      this.state.items.splice(_lengthItems - 2, 1)
+    }else {
+      //alert('Error!')
+    }
   }
-  items.push(item) // add our new item
-  let _lengthItems = this.state.items.length
-  console.log(this.state.items)
-  this.state.items.splice(_lengthItems - 2, 1)
-}
 
   _onChangeText = (text) => this.setState({ text, item: text })
   submitAndClear = () => {
@@ -81,7 +86,7 @@ componentWillReceiveProps (nextProps) {
     }
   }
   HandleReceiveMessage = (value) => {
-    const {items} =this.state
+    const { items } = this.state
     let item = {
       type: 3,
       //key: 'aKey',// give it a unique key
