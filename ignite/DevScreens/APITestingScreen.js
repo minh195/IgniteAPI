@@ -58,6 +58,7 @@ export default class APITestingScreen extends React.Component {
   }
 
   render () {
+    console.log(1)
     return (
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />

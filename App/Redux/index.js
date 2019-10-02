@@ -6,9 +6,11 @@ import ReduxPersist from '../Config/ReduxPersist'
 
 /* ------------- Assemble The Reducers ------------- */
 export const reducers = combineReducers({
+  messageReducer: require('./GetMessageRedux').reducer,
   nav: require('./NavigationRedux').reducer,
-  github: require('./GithubRedux').reducer,
-  search: require('./SearchRedux').reducer
+  // github: require('./GithubRedux').reducer,
+  // search: require('./SearchRedux').reducer,
+
 })
 
 export default () => {
