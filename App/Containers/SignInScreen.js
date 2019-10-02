@@ -8,15 +8,10 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native'
-import { DetailScreen } from '../screenNames'
 import PopUpMoDal from '../Components/PopUpMoDal'
-import { Images } from '../Themes'
-import { connect } from 'react-redux'
-// Add Actions - replace 'Your' with whatever your reducer is called :)
-// import YourActions from '../Redux/YourRedux'
-
 // Styles
 import styles from './Styles/SignInScreenStyle'
+import { Images } from '../Themes'
 
 class SignInScreen extends Component {
   constructor (props) {
@@ -31,11 +26,8 @@ class SignInScreen extends Component {
   _onChangeTextPassword = (text) => this.setState({ text, username: text })
   _signInAsync = async () => {
     await AsyncStorage.setItem('userToken', 'abc')
-    this.props.navigation.navigate('ChatScreen')
-    this.refs.addModal.showModal()
-  }
-  _signUp = () => {
-    this.refs.addModal.showModal()
+    await this.props.navigation.navigate('Drawer')
+    await this.refs.addModal.showModal()
   }
 
   render () {
@@ -44,9 +36,7 @@ class SignInScreen extends Component {
         <PopUpMoDal ref={'addModal'}/>
         <ImageBackground source={Images.backgroundLogin}
                          style={styles.imageBack}>
-          <Text style={styles.appName}>
-            Chat demo
-          </Text>
+          <Text style={styles.appName}>Chat demo</Text>
         </ImageBackground>
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon}
@@ -68,17 +58,13 @@ class SignInScreen extends Component {
         </View>
         <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]}
                           onPress={this._signInAsync}>
-          <Text style={styles.loginText}>
-            Login
-          </Text>
+          <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonContainer}>
           <Text style={styles.forgotText}>FORGOT PASSWORD?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer}
-                          onPress={this._signUp}>
-          <Text style={styles.signInText}>
-            Don't have an account?
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Text style={styles.signInText}>Don't have an account?
             <Text style={styles.textSignUp}>
               Sign Up
             </Text>
@@ -89,15 +75,4 @@ class SignInScreen extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//   }
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//   }
-// }
-//
-// export default connect(mapStateToProps, mapDispatchToProps)(SignInScreen)
 export default SignInScreen
