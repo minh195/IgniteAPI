@@ -10,15 +10,11 @@ import {
   ImageBackground,
   AsyncStorage,
 } from 'react-native'
+import styles from './Styles/ChatScreenStyle'
+import { Images } from '../Themes'
 import PopUpMoDal from '../Components/PopUpMoDal'
 import Loading from '../Components/Loading'
 import { connect } from 'react-redux'
-// Add Actions - replace 'Your' with whatever your reducer is called :)
-// import YourActions from '../Redux/YourRedux'
-
-// Styles
-import styles from './Styles/ChatScreenStyle'
-import { Images } from '../Themes'
 import GetMessageTypes from '../Redux/GetMessageRedux'
 
 class ChatScreen extends Component {
@@ -43,11 +39,10 @@ class ChatScreen extends Component {
   componentWillReceiveProps (nextProps) {
     let { items } = this.state
     let posts = nextProps.messages.payload
-    if(posts!=null){
+    if (posts != null) {
       console.log(posts)
       let item = {
         type: 2,
-        //key: 'aKey',// give it a unique key
         id: items[items.length - 1].id++, // get the last id of our items and increment it(i.e +1)
         receiveMes: posts//remove line space
       }
@@ -55,8 +50,6 @@ class ChatScreen extends Component {
       let _lengthItems = this.state.items.length
       console.log(this.state.items)
       this.state.items.splice(_lengthItems - 2, 1)
-    }else {
-      //alert('Error!')
     }
   }
 
@@ -71,15 +64,12 @@ class ChatScreen extends Component {
       alert('Type a message!!')
     } else {
       let { items } = this.state
-      // Give convert our item to an object then push to our current items (array)
       let item = {
-        //key: 'aKey',// give it a unique key
-        id: items[items.length - 1].id++, // get the last id of our items and increment it(i.e +1)
+        id: items[items.length - 1].id++,
         type: 1,
         label: value
       }
-      items.push(item) // add our new item
-      // set our items to the state to update it
+      items.push(item)
       Keyboard.dismiss()
       this.submitAndClear()
       this.HandleReceiveMessage(value)
@@ -89,10 +79,9 @@ class ChatScreen extends Component {
     const { items } = this.state
     let item = {
       type: 3,
-      //key: 'aKey',// give it a unique key
-      id: items[items.length - 1].id++, // get the last id of our items and increment it(i.e +1)
+      id: items[items.length - 1].id++,
     }
-    items.push(item) // add our new item
+    items.push(item)
     try {
       this.props.onFetchMessage(value)
     } catch (e) {
@@ -164,10 +153,8 @@ class ChatScreen extends Component {
   }
 
   render () {
-    //const { navigation } = this.props
     console.disableYellowBox = true
     let { items, item } = this.state
-    console.log(this.props.messages.payload)
     return (
       <View style={styles.container}>
         <PopUpMoDal ref={'addModal'}/>
@@ -187,13 +174,12 @@ class ChatScreen extends Component {
         </View>
         <View style={styles.content}>
           <Text style={styles.dateMassage}>TODAY</Text>
-          <FlatList
-            data={items}
-            keyExtractor={(item, index) => item.key}
-            renderItem={this.renderItem}
-            ref={ref => this.flatList = ref}
-            onContentSizeChange={() => this.flatList.scrollToEnd({ animated: true })}
-            onLayout={() => this.flatList.scrollToEnd({ animated: true })}/>
+          <FlatList data={items}
+                    keyExtractor={(item, index) => item.key}
+                    renderItem={this.renderItem}
+                    ref={ref => this.flatList = ref}
+                    onContentSizeChange={() => this.flatList.scrollToEnd({ animated: true })}
+                    onLayout={() => this.flatList.scrollToEnd({ animated: true })}/>
         </View>
         <View style={styles.footer}>
           <View style={styles.reactIcon}>
@@ -224,18 +210,6 @@ class ChatScreen extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//   }
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//   }
-// }
-//
-// export default connect(mapStateToProps, mapDispatchToProps)(SignInScreen)
-// export default ChatScreen
 const mapStateToProps = (state) => {
   return {
     messages: state.messageReducer
@@ -245,7 +219,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onFetchMessage: (data) => {
-      console.log('action fetch')
       dispatch(GetMessageTypes.getMessageRequest(data))
     },
   }

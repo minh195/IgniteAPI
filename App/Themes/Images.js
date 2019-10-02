@@ -12,7 +12,9 @@ const images = {
   goBack:require('../Images/Icons/go-back.png'),
   addIcon:require('../Images/Icons/add-icon.png'),
   smileIcon:require('../Images/Icons/smile-icon.png'),
-  sendIcon:require('../Images/Icons/send-icon.png')
+  sendIcon:require('../Images/Icons/send-icon.png'),
+  avatarDrawer:require('../Images/avtarDrawer.jpg'),
+  seeYou:require('../Images/see-you.jpg')
   // logo: require('../Images/ir.png'),
   // clearLogo: require('../Images/top_logo.png'),
   // launch: require('../Images/launch-icon.png'),

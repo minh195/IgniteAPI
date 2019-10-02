@@ -1,13 +1,14 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
   View,
   ActivityIndicator,
   Image,
 } from 'react-native'
-import {Images} from '../Themes'
+import { Images } from '../Themes'
 import styles from './Styles/LoadingStyle'
+
 export default class Loading extends Component {
-  render() {
+  render () {
     return (
       <View style={styles.item1}>
         <Image
@@ -17,6 +18,6 @@ export default class Loading extends Component {
           <ActivityIndicator animating={true}/>
         </View>
       </View>
-    );
+    )
   }
 }
