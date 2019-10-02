@@ -36,9 +36,24 @@ class ChatScreen extends Component {
       loading: true,
       error: false,
       posts: '',
-      data:''
+      value:''
     }
   }
+componentWillReceiveProps (nextProps) {
+  let { items } = this.state
+  let posts=nextProps.messages.payload
+  console.log(posts)
+  let item = {
+    type: 2,
+    //key: 'aKey',// give it a unique key
+    id: items[items.length - 1].id++, // get the last id of our items and increment it(i.e +1)
+    receiveMes: posts//remove line space
+  }
+  items.push(item) // add our new item
+  let _lengthItems = this.state.items.length
+  console.log(this.state.items)
+  this.state.items.splice(_lengthItems - 2, 1)
+}
 
   _onChangeText = (text) => this.setState({ text, item: text })
   submitAndClear = () => {
@@ -47,14 +62,13 @@ class ChatScreen extends Component {
     })
   }
   addItem = (value) => {
-    this.props.onFetchMessage(value)
     if (this.state.text === '') {
       alert('Type a message!!')
     } else {
       let { items } = this.state
       // Give convert our item to an object then push to our current items (array)
       let item = {
-        key: 'aKey',// give it a unique key
+        //key: 'aKey',// give it a unique key
         id: items[items.length - 1].id++, // get the last id of our items and increment it(i.e +1)
         type: 1,
         label: value
@@ -63,39 +77,22 @@ class ChatScreen extends Component {
       // set our items to the state to update it
       Keyboard.dismiss()
       this.submitAndClear()
-
-      this.HandleReceiveMessage(value).then()
+      this.HandleReceiveMessage(value)
     }
   }
-  HandleReceiveMessage = async (value) => {
-    let txt = value
-    let language = 'en'
-    let { items } = this.state
+  HandleReceiveMessage = (value) => {
+    const {items} =this.state
     let item = {
       type: 3,
-      key: 'aKey',// give it a unique key
+      //key: 'aKey',// give it a unique key
       id: items[items.length - 1].id++, // get the last id of our items and increment it(i.e +1)
     }
     items.push(item) // add our new item
     try {
-      const response = await fetch(`http://ghuntur.com/simsim.php?lc=${language}&deviceId=&bad0=&txt=${txt}`,
-        {
-          method: 'GET',
-        })
-      let posts = await response.text()//with any line with space
-      let item = {
-        type: 2,
-        key: 'aKey',// give it a unique key
-        id: items[items.length - 1].id++, // get the last id of our items and increment it(i.e +1)
-        receiveMes: posts.trim()//remove line space
-      }
-      items.push(item) // add our new item
-      this.setState({ loading: false })
+      this.props.onFetchMessage(value)
     } catch (e) {
-      this.setState({ loading: false, error: true })
+      console.log(e)
     }
-    let _lengthItems = this.state.items.length
-    this.state.items.splice(_lengthItems - 2, 1)
   }
   renderItem = ({ item }) => {
     let { label, receiveMes, type } = item
